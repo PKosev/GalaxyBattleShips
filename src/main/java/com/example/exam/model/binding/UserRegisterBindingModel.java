@@ -1,8 +1,9 @@
 package com.example.exam.model.binding;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.Size;
+import org.hibernate.validator.constraints.UniqueElements;
+
+import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.*;
 
 public class UserRegisterBindingModel {
     private String username;
@@ -10,6 +11,8 @@ public class UserRegisterBindingModel {
     private String email;
     private String password;
     private String confirmPassword;
+    private Boolean emailExist;
+    private Boolean usernameExist;
 
     public UserRegisterBindingModel() {
     }
@@ -30,6 +33,8 @@ public class UserRegisterBindingModel {
     public void setFullName(String fullName) {
         this.fullName = fullName;
     }
+
+    @NotEmpty
     @Email
     public String getEmail() {
         return email;
@@ -54,5 +59,21 @@ public class UserRegisterBindingModel {
 
     public void setConfirmPassword(String confirmPassword) {
         this.confirmPassword = confirmPassword;
+    }
+
+    public Boolean getEmailExist() {
+        return emailExist;
+    }
+
+    public void setEmailExist(Boolean emailExist) {
+        this.emailExist = emailExist;
+    }
+
+    public Boolean getUsernameExist() {
+        return usernameExist;
+    }
+
+    public void setUsernameExist(Boolean usernameExist) {
+        this.usernameExist = usernameExist;
     }
 }

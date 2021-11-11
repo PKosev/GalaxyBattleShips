@@ -37,9 +37,15 @@ public class UserController {
     @PostMapping("/register")
     public String registerConfirm(@Valid UserRegisterBindingModel userRegisterBindingModel,
                                   BindingResult bindingResult, RedirectAttributes redirectAttributes){
-        if (bindingResult.hasErrors() || !userRegisterBindingModel.getPassword().equals(userRegisterBindingModel.getConfirmPassword())){
+        if (bindingResult.hasErrors() || !userRegisterBindingModel.getPassword().equals(userRegisterBindingModel.getConfirmPassword()) || userService.findByEmail(userRegisterBindingModel.getEmail()) != null || userService.findByUsername(userRegisterBindingModel.getUsername()) != null){
             redirectAttributes.addFlashAttribute("userRegisterBindingModel", userRegisterBindingModel);
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.userRegisterBindingModel",bindingResult);
+            if (userService.findByEmail(userRegisterBindingModel.getEmail()) != null){
+                userRegisterBindingModel.setEmailExist(true);
+            }
+            if (userService.findByUsername(userRegisterBindingModel.getUsername()) != null){
+                userRegisterBindingModel.setUsernameExist(true);
+            }
             return "redirect:register";
         }
         userService.registerUser(modelMapper.map(userRegisterBindingModel, UserServiceModel.class));
