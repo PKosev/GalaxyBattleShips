@@ -3,10 +3,8 @@ package com.example.exam.web;
 import com.example.exam.model.binding.FightBindingModel;
 import com.example.exam.model.entity.Ship;
 import com.example.exam.model.view.ShipViewModel;
-import com.example.exam.repository.ShipRepository;
 import com.example.exam.security.CurrentUser;
 import com.example.exam.service.ShipService;
-import com.example.exam.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -22,15 +20,11 @@ import java.util.List;
 public class HomeController {
     private final CurrentUser currentUser;
     private final ShipService shipService;
-    private final UserService userService;
-    private final ShipRepository shipRepository;
 
 
-    public HomeController(CurrentUser currentUser, ShipService shipService, UserService userService, ShipRepository shipRepository) {
+    public HomeController(CurrentUser currentUser, ShipService shipService) {
         this.currentUser = currentUser;
         this.shipService = shipService;
-        this.userService = userService;
-        this.shipRepository = shipRepository;
     }
 
     @GetMapping()
@@ -63,11 +57,7 @@ public class HomeController {
         if (attacker.getPower() >= defender.getHealth()){
             shipService.deleteById(fightBindingModel.getDefender());
         }else {
-            //При помяна на кървта записа се изтрива и поставя на ново, за това IDто се промея и се набюдават смяна на местата при атака на
-            //непоследно добавен кораб.
-            //Не е казано, че трябва да си запазват ид-то, а само да са подредени по него, което е изпълненео на 100% :):):)
             defender.setHealth(defender.getHealth() - attacker.getPower());
-            shipService.deleteById(fightBindingModel.getDefender());
             shipService.reAddShip(defender);
         }
         return "redirect:/";
