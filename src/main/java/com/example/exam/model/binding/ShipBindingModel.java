@@ -31,6 +31,7 @@ public class ShipBindingModel {
         this.name = name;
     }
 
+    @NotNull
     @Positive
     public Long getHealth() {
         return health;
@@ -39,6 +40,8 @@ public class ShipBindingModel {
     public void setHealth(Long health) {
         this.health = health;
     }
+
+    @NotNull
     @Positive
     public Long getPower() {
         return power;
@@ -48,6 +51,7 @@ public class ShipBindingModel {
         this.power = power;
     }
 
+    @NotNull
     @PastOrPresent
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     public LocalDate getCreated() {
