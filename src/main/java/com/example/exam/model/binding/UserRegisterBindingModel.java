@@ -1,8 +1,6 @@
 package com.example.exam.model.binding;
 
-import org.hibernate.validator.constraints.UniqueElements;
 
-import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.*;
 
 public class UserRegisterBindingModel {
